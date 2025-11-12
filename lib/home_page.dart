@@ -46,24 +46,65 @@ class HomePage extends StatelessWidget {
         ],
       ),
 
-      body: Center(
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Container(
+          height: 500,
+          width: 350,
+          margin: EdgeInsets.all(20),
+          padding: EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.brown, Colors.brown.shade200],
+            ),
+            border: Border.all(color: Colors.red, width: 5),
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            // mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 "Welcome to homepage",
                 style: GoogleFonts.lobster(textStyle: TextStyle(fontSize: 30)),
               ),
               Image.asset('assets/images/flutter.png', height: 50),
-              Image.asset(
-                'assets/images/images.jpeg',
-                height: 400,
-                fit: BoxFit.fill,
+
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        // backgroundColor: Colors.brown,
+                        // foregroundColor: Colors.white,
+                        // fixedSize: Size(200, 20),
+                      ),
+                      child: Text("Elevated"),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      style: TextButton.styleFrom(
+                        // backgroundColor: Colors.brown,
+                        // foregroundColor: Colors.white,
+                        // fixedSize: Size(200, 20),
+                      ),
+                      child: Text("Texted"),
+                    ),
+                    OutlinedButton(onPressed: () {}, child: Text("Outlined")),
+                  ],
+                ),
               ),
-              Image.network(
-                'https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=500',
-              ),
+              // SizedBox(height: 20),
+              Container(height: 100, width: 100, color: Colors.blueGrey),
+              // Image.asset(
+              //   'assets/images/images.jpeg',
+              //   height: 400,
+              //   fit: BoxFit.fill,
+              // ),
+              // Image.network(
+              //   'https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=500',
+              // ),
             ],
           ),
         ),
