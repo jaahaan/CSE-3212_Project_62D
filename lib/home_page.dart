@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project_62d/profile_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -39,7 +40,17 @@ class HomePage extends StatelessWidget {
           ),
           Divider(),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return ProfilePage();
+                  },
+                ),
+              );
+            },
             leading: Icon(Icons.person),
             title: Text("ProfilePage"),
           ),
@@ -74,7 +85,16 @@ class HomePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ProfilePage();
+                            },
+                          ),
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
                         // backgroundColor: Colors.brown,
                         // foregroundColor: Colors.white,
