@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project_62d/home_page.dart';
+import 'package:project_62d/widgets/input_field.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -9,8 +11,12 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   TextEditingController nameController = TextEditingController();
+  TextEditingController passController = TextEditingController();
+
   String name = "";
   String? errorMsg;
+  String? errorPass;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,34 +35,22 @@ class _ProfilePageState extends State<ProfilePage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TextFormField(
+                  InputField(
                     controller: nameController,
                     keyboardType: TextInputType.text,
-                    // onChanged: (value) {
-                    //   name = nameController.text;
-                    //   setState(() {});
-                    // },
-                    // obscureText: true,
-                    onFieldSubmitted: (value) {
-                      setState(() {
-                        errorMsg = null;
-                        if (nameController.text.isEmpty) {
-                          errorMsg = "Field is empty";
-                        } else {
-                          name = nameController.text;
-                        }
-                      });
-                    },
-                    decoration: InputDecoration(
-                      errorText: errorMsg,
-                      labelText: "Name",
-                      hintText: "Enter Name...",
-                      prefixIcon: Icon(Icons.person),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.green),
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                      ),
-                    ),
+                    label: "Name",
+                    hint: "Enter Name",
+                    icon: Icons.person,
+                    errorText: errorMsg,
+                  ),
+                  SizedBox(height: 20),
+                  InputField(
+                    controller: passController,
+                    keyboardType: TextInputType.visiblePassword,
+                    label: "Password",
+                    hint: "Enter Password",
+                    icon: Icons.lock,
+                    errorText: errorPass,
                   ),
                   SizedBox(height: 20),
                   ElevatedButton(
@@ -74,6 +68,17 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   SizedBox(height: 20),
                   Text("Name is: $name"),
+                  SizedBox(height: 20),
+
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomePage()),
+                      );
+                    },
+                    child: Text("Homepage"),
+                  ),
                 ],
               ),
             ),
