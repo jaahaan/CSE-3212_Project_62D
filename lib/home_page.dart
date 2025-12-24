@@ -4,9 +4,25 @@ import 'package:project_62d/converter_page.dart';
 import 'package:project_62d/profile_page.dart';
 import 'package:project_62d/stateful_widget_page.dart';
 import 'package:project_62d/stateless_widget_page.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final _supabase = Supabase.instance.client;
+
+  Future<Map<String, dynamic>?> getCurrentUser() async {
+    final user = _supabase.auth.currentUser;
+    if (user == null) return null;
+    final res =
+        await _supabase.from('profiles').select().eq('id', user.id).single();
+    return res;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +33,12 @@ class HomePage extends StatelessWidget {
         foregroundColor: Colors.greenAccent,
         title: Text("My Flutter Project"),
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.search)),
-          IconButton(onPressed: () {}, icon: Icon(Icons.person)),
+          IconButton(
+            onPressed: () {
+              _supabase.auth.signOut();
+            },
+            icon: Icon(Icons.logout),
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -67,6 +87,37 @@ class HomePage extends StatelessWidget {
             Text(
               "Welcome to homepage",
               style: GoogleFonts.lobster(textStyle: TextStyle(fontSize: 30)),
+            ),
+            FutureBuilder(
+              future: getCurrentUser(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                if (snapshot.hasError) {
+                  return Text("Error ${snapshot.error}");
+                }
+                if (!snapshot.hasData) {
+                  return const Text("No User Found!!");
+                }
+                final profile = snapshot.data as Map<String, dynamic>;
+                return SizedBox(
+                  width: 300,
+                  height: 100,
+                  child: Card(
+                    color: Colors.blueGrey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Name: ${profile['name']}"),
+                        Text("Email: ${profile['email']}"),
+                        if (profile['avatar_url'] != null)
+                          Image.network(profile['avatar_url']),
+                      ],
+                    ),
+                  ),
+                );
+              },
             ),
             Image.asset('assets/images/flutter.png', height: 50),
 
